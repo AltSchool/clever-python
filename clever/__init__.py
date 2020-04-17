@@ -305,17 +305,10 @@ class APIRequestor(object):
 
     try:
       try:
-        # Use a CA_BUNDLE containing the following chain:
-        # - TrustedRoot
-        # - DigiCert High Assurance EV - 1
-        #
-        # This ensures that only this certificate chain is used to verify SSL certs.
-        # Certs dervived from other ca certs will be treated as invalid.
-        # eg. https://api.twitter.com and https://api.stripe.com FAIL
-        #     https://api.clever.com and https://api.github.com PASS
+        # XXX April 17 2020: No longer using custom cert bundle as the bundle seems to no longer work.
         result = requests.request(meth, abs_url,
                                   headers=headers, data=data, timeout=80,
-                                  verify=CLEVER_CERTS)
+                                  verify=True)
       except TypeError as e:
         raise TypeError(
             'Warning: It looks like your installed version of the "requests" library is not compatible with Clever\'s usage thereof. (HINT: The most likely cause is that your "requests" library is out of date. You can fix that by running "pip install -U requests".) The underlying error was: %s' % (e, ))
