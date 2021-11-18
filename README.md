@@ -1,11 +1,13 @@
-# Clever Python bindings
+# Clever - the Python library for the Clever API
 
-## Maintenance
+## API Documentation
+View more detailed documentation [here](docs/README.md)
 
-Clever is moving to a community supported model with our client libraries. We will still respond to and merge incoming PRs but are looking to turn over ownership of these libraries to the community. If you are interested, please contact our partner-engineering team at tech-support@clever.com.
+## Requirements.
+
+Python 2.7 and 3.4+
 
 ## Installation
-
 From PyPi:
 
 ```bash
@@ -24,92 +26,80 @@ Or from source:
     $ python setup.py install
 ```
 
-## Usage
+Then import the package:
+```python
+import clever
+```
 
-Get started by importing the `clever` module and setting your authentication method:
+## Getting Started
+
+Please follow the [installation procedure](#installation) and then run the following:
 
 ```python
-    import clever
-    clever.set_token('YOUR_OAUTH_TOKEN')
-    # or if you're using API key auth
-    # clever.set_api_key('YOUR_API_KEY')
+from __future__ import print_function
+import time
+import clever
+from clever.rest import ApiException
+from pprint import pprint
+
+# Note: This is hard coded for demo purposes only. Keep your access tokens secret!
+# https://dev.clever.com/docs/security#section-security-best-practices
+
+# Configure OAuth2 access token for authorization: oauth
+configuration = clever.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# create an instance of the API class
+api_instance = clever.DataApi(clever.ApiClient(configuration))
+
+try:
+    api_response = api_instance.get_students()
+    for student in api_response.data:
+        pprint(student.data.id)
+except ApiException as e:
+    print("Exception when calling DataApi->get_students: %s\n" % e)
+
 ```
 
-The `clever` module exposes classes corresponding to resources:
+## Updating the Library
 
-* Contact
-* District
-* DistrictAdmin
-* School
-* SchoolAdmin
-* Section
-* Student
-* Teacher
-* Event
+1. Git clone swagger-codegen (https://github.com/swagger-api/swagger-codegen)
 
-Each exposes a class method `all` that returns a list of all data in that resource that you have access to. Keyword arguments correspond to the same query parameters supported in the HTTP API, except that `limit` and `page` are not supported (pagination is handled automatically).
+2. Git clone Clever's swagger-api repo (https://github.com/Clever/swagger-api)
 
-```python
-    schools = clever.School.all() # gets information about all schools you have access to
-    schools = clever.School.all(where=json.dumps({'name': 'Of Hard Knocks'}))
-    schools = clever.School.all(sort='state')
+3. Run this command in the swagger-codegen repo
+```
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i $PATH_TO_SWAGGER_API_REPO/v2.1-client.yml -l python -o $PATH_TO_THIS_REPO --additional-properties packageVersion=$VERSION
 ```
 
-If you'd like more control over pagination, or to limit the number of resources returned, use the `iter` class method:
+4. Run `make override` to copy over the override files
 
-```python
-    students = clever.Student.iter()
-    for i in range(0,2000):
-        print students.next()
-```
+5. Update the CHANGELOG.md with the changes!
 
-You may also use the `starting_after` or `ending_before` parameters with the `iter` method:
-
-```python
-    students = clever.Student.iter(starting_after="530e5960049e75a9262cff1d")
-    for s in students:
-        print students.next()
-```
-
-The `retrieve` class method takes in a Clever ID and returns a specific resource. The object (or list of objects in the case of `all`) supports accessing properties using either dot notation or dictionary notation:
-
-```python
-    demo_school = clever.School.retrieve("4fee004cca2e43cf27000001")
-    assert demo_school.name == 'Clever Academy'
-    assert demo_school['name'] == 'Clever Academy'
-```
-
-## CLI
-
-The library comes with a basic command-line interface:
-
-```bash
-    $ export CLEVER_API_KEY=DEMO_KEY
-    $ clever districts all
-    Running the equivalent of:
-    --
-    curl https://api.clever.com/v1.1/districts -H "Authorization: Basic REVNT19LRVk="
-    --
-    Starting new HTTPS connection (1): api.clever.com
-    API request to https://api.clever.com/v1.1/districts returned (response code, response body)     of (200, '{"data":[{"data":{"name":"Demo District","id":"4fd43cc56d11340000000005"},"uri":"/v1.1/districts/4fd43cc56d11340000000005"}],"links":[{"rel":"self","uri":"/v1.1/districts"}]}')
-    Result (HTTP status code 200):
-    --
-    {"data":[{"data":{"name":"Demo District","id":"4fd43cc56d11340000000005"},"uri":"/v1.1/districts/4fd43cc56d11340000000005"}],"links":[{"rel":"self","uri":"/v1.1/districts"}]}
-    --
-```
-
-Run `clever -h` to see a full list of commands.
-
-## Feedback
-
-Questions, feature requests, or feedback of any kind is always welcome! We're available at [tech-support@clever.com](mailto:tech-support@clever.com).
 
 ## Development
 
 ### Dependencies
 
-    pip install -r requirements.txt
+    make deps
 
 ### Testing
 
-    python -m unittest discover test
+    make test
+
+## Publishing
+
+Run `make publish` to publish a new version of the library.
+
+In order to publish to PyPI you will need a `.pypirc` file in your `$HOME` directory with the following contents:
+```
+[distutils]
+index-servers =
+    pypi
+
+[pypi]
+username: ****
+password: ****
+```
+
+The username and password are in 1Password for Teams under `PyPI`.
