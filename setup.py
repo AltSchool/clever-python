@@ -14,7 +14,7 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "clever-python"
+NAME = "clever"
 VERSION = "3.0.2"
 # To install the library, run the following
 #
