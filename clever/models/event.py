@@ -33,16 +33,18 @@ class Event(object):
     swagger_types = {
         'created': 'str',
         'id': 'str',
-        'type': 'str'
+        'type': 'str',
+        'data': 'object'
     }
 
     attribute_map = {
         'created': 'created',
         'id': 'id',
-        'type': 'type'
+        'type': 'type',
+        'data': 'data'
     }
 
-    def __init__(self, created=None, id=None, type=None):
+    def __init__(self, created=None, id=None, type=None, data=None):
         """
         Event - a model defined in Swagger
         """
@@ -50,11 +52,14 @@ class Event(object):
         self._created = None
         self._id = None
         self._type = None
+        self._data = None
 
         if created is not None:
           self.created = created
         if id is not None:
           self.id = id
+        if data is not None:
+          self.data = data
         self.type = type
 
     @property
@@ -121,6 +126,29 @@ class Event(object):
             raise ValueError("Invalid value for `type`, must not be `None`")
 
         self._type = type
+
+    @property
+    def data(self):
+        """
+        Gets the data comprising of this Event.
+
+        :return: The data of this Event.
+        :rtype: object
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data):
+        """
+        Sets the data of this Event.
+
+        :param data: The data of this Event.
+        :type: object
+        """
+        if data is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")
+
+        self._data = data
 
     def to_dict(self):
         """
