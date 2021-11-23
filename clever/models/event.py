@@ -146,7 +146,7 @@ class Event(object):
         :type: object
         """
         if data is None:
-            raise ValueError("Invalid value for `type`, must not be `None`")
+            raise ValueError("Invalid value for `data`, must not be `None`")
 
         self._data = data
 
