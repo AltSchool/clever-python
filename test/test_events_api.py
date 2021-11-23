@@ -18,6 +18,7 @@ import sys
 import unittest
 
 import clever
+from clever.models import Event
 from clever.rest import ApiException
 from clever.apis.events_api import EventsApi
 
@@ -46,13 +47,15 @@ class TestEventsApi(unittest.TestCase):
 
 
         """
-
         # Check event class is properly set
         response = self.api.get_events(limit=1)
         event = response.data[0]
         event_class = type(event.data).__name__
-        self.assertTrue(event_class != 'Event')
-        self.assertTrue(event_class.endswith('Created') or event_class.endswith('Updated') or event_class.endswith('Deleted'))
+        event_data = event.data.__dict__
+        self.assertTrue(event_class == 'Event')
+        for key in Event.swagger_types.keys():
+            key = '_' + key
+            self.assertIn(key, event_data)
 
     def test_get_events_for_school(self):
         """

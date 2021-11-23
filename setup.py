@@ -14,7 +14,7 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "clever-python"
+NAME = "clever"
 VERSION = "3.0.2"
 # To install the library, run the following
 #
@@ -40,18 +40,3 @@ setup(
     """
 )
 
-# We publish to both 'clever' and 'clever-python'
-setup(
-    name="clever",
-    version=VERSION,
-    description="Clever API",
-    author_email="",
-    url="",
-    keywords=["Swagger", "Clever API"],
-    install_requires=REQUIRES,
-    packages=find_packages(),
-    include_package_data=True,
-    long_description="""\
-    The Clever API
-    """
-)
