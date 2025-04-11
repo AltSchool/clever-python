@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **created** | **str** |  | [optional] 
 **district** | **str** |  | [optional] 
+**ext** | **object** |  | [optional] 
 **high_grade** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
 **last_modified** | **str** |  | [optional] 
@@ -19,6 +20,6 @@ Name | Type | Description | Notes
 **sis_id** | **str** |  | [optional] 
 **state_id** | **str** |  | [optional] 
 
-[[Back to Model list]](README.md#documentation-for-models) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to README]](README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

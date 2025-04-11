@@ -6,9 +6,11 @@ Name | Type | Description | Notes
 **course** | **str** |  | [optional] 
 **created** | **str** |  | [optional] 
 **district** | **str** |  | [optional] 
+**ext** | **object** |  | [optional] 
 **grade** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
 **last_modified** | **str** |  | [optional] 
+**lms_status** | [**LmsStatus**](LmsStatus.md) |  | [optional] 
 **name** | **str** |  | [optional] 
 **period** | **str** |  | [optional] 
 **school** | **str** |  | [optional] 
@@ -20,6 +22,6 @@ Name | Type | Description | Notes
 **teachers** | **list[str]** |  | [optional] 
 **term_id** | **str** |  | [optional] 
 
-[[Back to Model list]](README.md#documentation-for-models) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to README]](README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

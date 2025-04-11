@@ -66,3 +66,4 @@ target/
 .travis.yml
 git_push.sh
 .swagger-codegen/
+.idea
